@@ -16,6 +16,11 @@ class Toggle extends React.Component {
   //    be able to accept `on`, `toggle`, and `children` as props.
   //    Note that they will _not_ have access to Toggle instance properties
   //    like `this.state.on` or `this.toggle`.
+
+  static On = ({on, children}) => on ? children : null
+  static Off = ({on, children}) => on ? null : children
+  static Button = ({on, toggle}) => <Switch on={on} onClick={toggle} />
+
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -33,8 +38,14 @@ class Toggle extends React.Component {
     // 2. React.cloneElement: https://reactjs.org/docs/react-api.html#cloneelement
     //
     // 🐨 you'll want to completely replace the code below with the above logic.
-    const {on} = this.state
-    return <Switch on={on} onClick={this.toggle} />
+    // const {on} = this.state
+    // return <Switch on={on} onClick={this.toggle} />
+    return React.Children.map(this.props.children, reactElement => {
+      return React.cloneElement(reactElement, {
+        on: this.state.on,
+        toggle: this.toggle,
+      })
+    })
   }
 }
 

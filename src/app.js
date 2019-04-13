@@ -18,6 +18,7 @@ const files = [
   '12',
 ]
 
+// to read
 const pages = files.reduce((p, filename, index, fullArray) => {
   const final = require(`./exercises-final/${filename}`)
   Object.assign(final, {
